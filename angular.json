@@ -28,6 +28,8 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -92,6 +94,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -123,6 +126,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "Assignment"
+    }
+  },
+  "defaultProject": "Assignment",
+  "cli": {
+    "analytics": "d5f6cc63-5c58-4ac9-87e7-a80a89d3dd58"
+  }
 }

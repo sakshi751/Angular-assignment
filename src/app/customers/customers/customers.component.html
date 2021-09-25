@@ -1,0 +1,225 @@
+<div class="container-fluid d-flex flex-column align-content-center">
+  <h2 class="p-2 text-center">Customers Form</h2>
+  <div class="d-flex align-self-center">
+    <form [formGroup]="customersForm" (ngSubmit)="postData()">
+      <div class="row g-3 mb-2">
+        <div class="col-md">
+          <mat-form-field appearance="outline">
+            <mat-label>Customer Id</mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Customer Id"
+              formControlName="customerId"
+              required
+              autofocus
+            />
+            <mat-error
+              *ngIf="
+                customersForm.get('customerId').touched &&
+                customersForm.get('customerId').hasError('required')
+              "
+            >
+              Please Enter customer ID
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md">
+          <mat-form-field appearance="outline">
+            <mat-label>Customer Name</mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Name"
+              formControlName="customerName"
+              required
+            />
+            <mat-error
+              *ngIf="
+                customersForm.get('customerName').touched &&
+                customersForm.get('customerName').hasError('required')
+              "
+            >
+              Please Enter Your Name
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md">
+          <mat-form-field appearance="outline">
+            <mat-label>Address</mat-label>
+            <textarea
+              matInput
+              placeholder="Address"
+              formControlName="address"
+              required
+            ></textarea>
+            <mat-error
+              *ngIf="
+                customersForm.get('address').touched &&
+                customersForm.get('address').hasError('required')
+              "
+            >
+              Please Enter Address
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md">
+          <mat-form-field appearance="outline">
+            <mat-label>Phone Number</mat-label>
+            <input
+              type="number"
+              matInput
+              placeholder="Phone Number"
+              formControlName="phoneNumber"
+              required
+            />
+            <mat-error
+              *ngIf="
+                customersForm.get('phoneNumber').touched &&
+                customersForm.get('phoneNumber').hasError('required')
+              "
+            >
+              Please Enter Phone Number
+            </mat-error>
+            <mat-error
+              *ngIf="
+                customersForm.get('phoneNumber').touched &&
+                customersForm.get('phoneNumber').hasError('pattern')
+              "
+            >
+              Phone Number must be 10 digits
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row g-3 mb-3 text-center">
+        <div class="col-md">
+          <mat-form-field appearance="outline">
+            <mat-label>Customer Mail Id</mat-label>
+            <input
+              type="email"
+              matInput
+              placeholder="Email"
+              formControlName="customerMailId"
+              required
+            />
+            <mat-error
+              *ngIf="
+                customersForm.get('customerMailId').touched &&
+                customersForm.get('customerMailId').hasError('required')
+              "
+            >
+              Please Enter Email ID
+            </mat-error>
+            <mat-error
+              *ngIf="
+                customersForm.get('customerMailId').touched &&
+                customersForm.get('customerMailId').hasError('email')
+              "
+            >
+              Please Enter Valid Email ID
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md text-center">
+          <button
+            mat-raised-button
+            color="accent"
+            type="submit"
+            [disabled]="!customersForm.valid"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="mat-elevation-z8 mb-3">
+    <mat-form-field appearance="standard" class="tableFilter">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" #input>
+    </mat-form-field>
+    <table mat-table matSort [dataSource]="dataSource">
+  
+      <!-- Position Column -->
+      <ng-container matColumnDef="customerId">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> Customer ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.customerId}} </td>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="customerName">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> Customer Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.customerName}} </td>
+      </ng-container>
+  
+      <!-- Weight Column -->
+      <ng-container matColumnDef="phoneNumber">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> Phone Number </th>
+        <td mat-cell *matCellDef="let element"> {{element.phoneNumber}} </td>
+      </ng-container>
+  
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="customerMailId">
+        <th mat-header-cell *matHeaderCellDef> Customer Mail ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.customerMailId}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef> Address </th>
+        <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[2, 4, 6]"
+                   showFirstLastButtons 
+                   aria-label="Select page of periodic elements">
+    </mat-paginator>
+  </div>
+  <!-- <div>
+    <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        
+        <ng-container matColumnDef="customerId">
+          <mat-header-cell *matHeaderCellDef> Customer Id </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.customerId}} </mat-cell>
+        </ng-container>
+      
+        
+        <ng-container matColumnDef="customerName">
+          <mat-header-cell *matHeaderCellDef> Customer Name </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.customerName}} </mat-cell>
+        </ng-container>
+      
+        
+        <ng-container matColumnDef="phoneNumber">
+          <mat-header-cell *matHeaderCellDef> Phone Number </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.phoneNumber}} </mat-cell>
+        </ng-container>
+      
+        <ng-container matColumnDef="customerMailId">
+          <mat-header-cell *matHeaderCellDef> Customer Mail ID </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.customerMailId}} </mat-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="address">
+            <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.address}} </mat-cell>
+          </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+  </div>
+</div> -->
